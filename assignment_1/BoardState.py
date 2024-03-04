@@ -44,6 +44,9 @@ class BoardState:
                 self.neighbors.append(neighbor)
 
     def getNeighbors(self):
+        if len(self.neighbors) == 0:
+            self.calcNeighbors()
+
         return self.neighbors
 
     def checkSolved(self):
