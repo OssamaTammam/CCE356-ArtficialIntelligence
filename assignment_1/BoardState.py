@@ -2,10 +2,12 @@ import random
 
 
 class BoardState:
-    goal = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    goal: list = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-    def __init__(self, layout: list = None, boardState: "BoardState" = None):
-        self.neighbors = []
+    def __init__(
+        self, layout: list[int] = None, boardState: "BoardState" = None
+    ) -> None:
+        self.neighbors: list[BoardState] = []
 
         # check if it's already an object and clone it
         if boardState is not None:
@@ -22,7 +24,7 @@ class BoardState:
             self.layout = list(range(9))
             random.shuffle(self.layout)
 
-    def calcNeighbors(self):
+    def calcNeighbors(self) -> None:
         possibleMoves = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (row, col)
         zeroIndex = self.layout.index(0)
         currRow, currCol = zeroIndex // 3, zeroIndex % 3
@@ -42,11 +44,11 @@ class BoardState:
                 neighbor = BoardState(layout=neighborLayout)
                 self.neighbors.append(neighbor)
 
-    def getNeighbors(self):
+    def getNeighbors(self) -> list["BoardState"]:
         if len(self.neighbors) == 0:
             self.calcNeighbors()
 
         return self.neighbors
 
-    def checkSolved(self):
+    def checkSolved(self) -> bool:
         return True if self.layout == BoardState.goal else False

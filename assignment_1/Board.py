@@ -2,13 +2,13 @@ from BoardState import BoardState
 
 
 class Board:
-    def __init__(self):
+    def __init__(self) -> None:
         self.state = BoardState()
 
-    def printCurrentState(self):
+    def printState(self) -> None:
         for i in range(3):
             for j in range(3):
                 if j == 2:
-                    print(self.state[i * 3 + j])
+                    print(self.state.layout[i * 3 + j])
                 else:
-                    print(self.state[i * 3 + j], end=",")
+                    print(self.state.layout[i * 3 + j], end=",")
