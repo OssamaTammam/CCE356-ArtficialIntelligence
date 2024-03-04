@@ -2,13 +2,16 @@ import random
 
 
 class BoardState:
-    def __init__(self, state=None):
-        if state is None:
+    goalState = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+    def __init__(self, prevBoardState=None):
+        # if state is not specified generate a random state
+        if prevBoardState.state is None:
             self.state = list(range(9))
             random.shuffle(self.state)
         else:
-            self.state = state
-        self.goalState = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            self.state = prevBoardState.state
+
         self.neighboringStates = []
         self.calcNeighbors()
 
@@ -34,4 +37,4 @@ class BoardState:
         return self.neighboringStates
 
     def checkSolved(self):
-        return True if self.state == self.goalState else False
+        return True if self.state == BoardState.goalState else False

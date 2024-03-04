@@ -5,7 +5,7 @@ class Board:
     def __init__(self):
         self.state = BoardState()
 
-    def printBoard(self):
+    def printCurrentState(self):
         for i in range(3):
             for j in range(3):
                 if j == 2:
