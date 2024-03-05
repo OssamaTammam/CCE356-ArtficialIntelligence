@@ -1,4 +1,5 @@
 import random
+from math import sqrt
 
 
 class BoardState:
@@ -8,6 +9,7 @@ class BoardState:
         self, layout: list[int] = None, boardState: "BoardState" = None
     ) -> None:
         self.neighbors: list[BoardState] = []
+        self.cost = 0
 
         # check if it's already an object and clone it
         if boardState is not None:
@@ -23,6 +25,11 @@ class BoardState:
         if layout is None and boardState is None:
             self.layout = list(range(9))
             random.shuffle(self.layout)
+
+    def __lt__(self, other):
+        # Define your comparison logic here
+        # This example compares the total score of the board states
+        return self.cost <= other.cost
 
     def calcNeighbors(self) -> None:
         possibleMoves = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (row, col)
@@ -52,3 +59,23 @@ class BoardState:
 
     def checkSolved(self) -> bool:
         return True if self.layout == BoardState.goal else False
+
+    def getZeroIndex(self):
+        return self.layout.index(0)
+
+    def manhattanDistance(self):
+        self.cost = 0
+
+        for i in range(len(self.layout)):
+            self.cost += abs((self.layout[i] // 3) - i // 3) + abs(
+                (self.layout[i] % 3) - i % 3
+            )
+
+    def euclideanDistance(self):
+        self.cost = 0
+
+        for i in range(len(self.layout)):
+            self.cost += sqrt(
+                ((self.layout[i] // 3) - i // 3) ** 2
+                + ((self.layout[i] % 3) - i % 3) ** 2
+            )
