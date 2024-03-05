@@ -27,8 +27,6 @@ class BoardState:
             random.shuffle(self.layout)
 
     def __lt__(self, other):
-        # Define your comparison logic here
-        # This example compares the total score of the board states
         return self.cost <= other.cost
 
     def calcNeighbors(self) -> None:

@@ -14,6 +14,7 @@ class Board:
                     print(self.state.layout[i * 3 + j])
                 else:
                     print(self.state.layout[i * 3 + j], end=",")
+        print("------")
 
     def BFS(self):
         return self.ai.BFS()
@@ -21,7 +22,10 @@ class Board:
     def DFS(self):
         return self.ai.DFS()
 
-    def AStar(self):
+    def AStarManhattan(self):
+        return self.ai.AStar(choice=True)
+
+    def AStarEuclidean(self):
         return self.ai.AStar()
 
     def printPath(path):
@@ -32,4 +36,4 @@ class Board:
                         print(state.layout[i * 3 + j])
                     else:
                         print(state.layout[i * 3 + j], end=",")
-            print("")
+            print("------")

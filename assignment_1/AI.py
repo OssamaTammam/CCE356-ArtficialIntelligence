@@ -4,8 +4,6 @@ import heapq
 
 
 class AI:
-    # goal = BoardState.goal
-
     def __init__(self, boardState):
         self.boardState: BoardState = boardState
 
