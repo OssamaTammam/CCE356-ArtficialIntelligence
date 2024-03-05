@@ -6,6 +6,16 @@ import heapq
 class AI:
     def __init__(self, boardState):
         self.boardState: BoardState = boardState
+        self.bfsPath = []
+        self.dfsPath = []
+        self.manhattanPath = []
+        self.euclideanPath = []
+
+    def solve(self):
+        self.bfsPath = self.BFS()
+        self.dfsPath = self.DFS()
+        self.manhattanPath = self.AStar(choice=True)
+        self.euclideanPath = self.AStar()
 
     def BFS(self) -> list[BoardState]:
         queue: deque[BoardState] = deque()
@@ -17,7 +27,6 @@ class AI:
             currState, currPath = queue.popleft()
 
             if currState.checkSolved():
-                self.boardState = currState
                 return currPath
 
             visited.add(currState)
@@ -36,12 +45,11 @@ class AI:
             currState, currPath = stack.pop()
 
             if currState.checkSolved():
-                self.boardState = currState
                 return currPath
 
             visited.add(currState)
             for neighborState in currState.getNeighbors():
-                if neighborState not in visited and neighborState not in stack:
+                if neighborState not in visited:
                     neighbor = (neighborState, currPath + [neighborState])
                     stack.append(neighbor)
 
@@ -61,12 +69,11 @@ class AI:
             currState, currPath = heapq.heappop(heap)
 
             if currState.checkSolved():
-                self.boardState = currState
                 return currPath
 
             visited.add(currState)
             for neighborState in currState.getNeighbors():
-                if neighborState not in visited and neighborState not in heap:
+                if neighborState not in visited:
                     if choice:
                         neighborState.manhattanDistance()
                     else:

@@ -26,8 +26,18 @@ class BoardState:
             self.layout = list(range(9))
             random.shuffle(self.layout)
 
+        self.initialLayout = list(self.layout)
+
     def __lt__(self, other):
         return self.cost <= other.cost
+
+    def __eq__(self, other):
+        if not isinstance(other, BoardState):
+            return False
+        return self.layout == other.layout
+
+    def __hash__(self):
+        return hash(tuple(self.layout))
 
     def calcNeighbors(self) -> None:
         possibleMoves = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (row, col)
@@ -77,3 +87,8 @@ class BoardState:
                 ((self.layout[i] // 3) - i // 3) ** 2
                 + ((self.layout[i] % 3) - i % 3) ** 2
             )
+
+    def resetBoard(self):
+        self.layout = self.initialLayout
+        self.cost = 0
+        self.neighbors = []
