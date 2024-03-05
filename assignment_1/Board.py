@@ -3,14 +3,14 @@ from AI import AI
 
 
 class Board:
-    def __init__(self, layout=None) -> None:
+    def __init__(self, layout: list[int] = None) -> None:
         if layout is not None:
-            self.state = BoardState(layout=layout)
+            self.state: BoardState = BoardState(layout=layout)
         else:
-            self.state = BoardState()
-        self.ai = AI(self.state)
+            self.state: BoardState = BoardState()
+        self.ai: AI = AI(self.state)
 
-    def solve(self):
+    def solve(self) -> None:
         self.ai.solve()
 
     def printState(self) -> None:
@@ -23,12 +23,15 @@ class Board:
                     print(self.state.layout[i * 3 + j], end=",")
         print("------")
 
-    def printAiPaths(self):
+    def printAiPaths(self) -> None:
         print("BFS:")
         Board.printPath(self.ai.bfsPath)
 
         print("DFS:")
         Board.printPath(self.ai.dfsPath)
+
+        print("Iterative Deepening DFS:")
+        Board.printPath(self.ai.iddfsPath)
 
         print("AStar Manhattan:")
         Board.printPath(self.ai.manhattanPath)
@@ -36,7 +39,7 @@ class Board:
         print("AStar Euclidean:")
         Board.printPath(self.ai.euclideanPath)
 
-    def printPath(path):
+    def printPath(path) -> None:
         print(f"Number of steps taken {len(path) - 1}")
         for state in path:
             for i in range(3):
@@ -47,5 +50,5 @@ class Board:
                         print(state.layout[i * 3 + j], end=",")
             print("------")
 
-    def reset(self):
+    def reset(self) -> None:
         self.state.resetBoard()

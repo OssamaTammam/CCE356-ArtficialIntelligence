@@ -3,7 +3,7 @@ from math import sqrt
 
 
 class BoardState:
-    goal: list = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    goal: list[int] = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
     def __init__(
         self, layout: list[int] = None, boardState: "BoardState" = None
@@ -26,21 +26,27 @@ class BoardState:
             self.layout = list(range(9))
             random.shuffle(self.layout)
 
-        self.initialLayout = list(self.layout)
+        self.initialLayout: list[int] = list(self.layout)
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         return self.cost <= other.cost
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if not isinstance(other, BoardState):
             return False
         return self.layout == other.layout
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(tuple(self.layout))
 
     def calcNeighbors(self) -> None:
-        possibleMoves = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (row, col)
+        possibleMoves = [
+            (-1, 0),
+            (1, 0),
+            (0, -1),
+            (0, 1),
+        ]  # (row, col)
+
         zeroIndex = self.layout.index(0)
         currRow, currCol = zeroIndex // 3, zeroIndex % 3
 
@@ -68,10 +74,10 @@ class BoardState:
     def checkSolved(self) -> bool:
         return True if self.layout == BoardState.goal else False
 
-    def getZeroIndex(self):
+    def getZeroIndex(self) -> int:
         return self.layout.index(0)
 
-    def manhattanDistance(self):
+    def manhattanDistance(self) -> None:
         self.cost = 0
 
         for i in range(len(self.layout)):
@@ -79,7 +85,7 @@ class BoardState:
                 (self.layout[i] % 3) - i % 3
             )
 
-    def euclideanDistance(self):
+    def euclideanDistance(self) -> None:
         self.cost = 0
 
         for i in range(len(self.layout)):
@@ -88,7 +94,7 @@ class BoardState:
                 + ((self.layout[i] % 3) - i % 3) ** 2
             )
 
-    def resetBoard(self):
+    def resetBoard(self) -> None:
         self.layout = self.initialLayout
         self.cost = 0
         self.neighbors = []
