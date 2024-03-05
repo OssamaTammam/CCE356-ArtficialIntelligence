@@ -26,3 +26,22 @@ class AI:
                 if neighborState not in visited:
                     neighbor = (neighborState, currPath + [neighborState])
                     queue.append(neighbor)
+
+    def DFS(self) -> list[BoardState]:
+        stack: list[BoardState] = []
+        visited: set[BoardState] = set()
+
+        # only use copies in a tuple storing the path it took with it
+        stack.append((self.boardState, [self.boardState]))
+        while stack:
+            currState, currPath = stack.pop()
+
+            if currState.checkSolved():
+                self.boardState = currState
+                return currPath
+
+            visited.add(currState)
+            for neighborState in currState.getNeighbors():
+                if neighborState not in visited:
+                    neighbor = (neighborState, currPath + [neighborState])
+                    stack.append(neighbor)
