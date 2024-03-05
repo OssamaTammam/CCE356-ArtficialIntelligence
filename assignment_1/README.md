@@ -2,5 +2,6 @@
 ## Algorithms Used
 * BFS
 * DFS
-* A* using manhattan distance 
-* A* using euclidean distance
+* Iterative Deepening DFS
+* A* using Manhattan Distance 
+* A* using Euclidean Distance
