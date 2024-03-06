@@ -39,7 +39,7 @@ class Board:
         print("AStar Euclidean:")
         Board.printPath(self.ai.euclideanPath)
 
-    def printPath(path) -> None:
+    def printPath(path: list[BoardState]) -> None:
         print(f"Number of steps taken {len(path) - 1}")
         for state in path:
             for i in range(3):

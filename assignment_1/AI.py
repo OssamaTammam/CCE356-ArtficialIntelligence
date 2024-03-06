@@ -1,6 +1,7 @@
 from collections import deque
 from BoardState import BoardState
 import heapq
+from time import time
 
 
 class AI:
@@ -13,11 +14,21 @@ class AI:
         self.iddfsPath = []
 
     def solve(self):
+        startTime = time()
         self.bfsPath = self.BFS()
+        print(f"BFS Time: {time() - startTime}")
+        startTime = time()
         self.dfsPath = self.DFS()
+        print(f"DFS Time: {time() - startTime}")
+        startTime = time()
         self.iddfsPath = self.IDDFS(30)
+        print(f"Iterative Deepening DFS Time: {time() - startTime}")
+        startTime = time()
         self.manhattanPath = self.AStar(choice=True)
+        print(f"A* using Manhattan Distance Time: {time() - startTime}")
+        startTime = time()
         self.euclideanPath = self.AStar()
+        print(f"A* using Euclidean Distance Time: {time() - startTime}")
 
     def BFS(self) -> list[BoardState]:
         queue: deque[tuple[BoardState, list[BoardState]]] = deque()
