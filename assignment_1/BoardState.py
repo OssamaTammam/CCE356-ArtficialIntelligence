@@ -3,8 +3,6 @@ from math import sqrt
 
 
 class BoardState:
-    goal: list[int] = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-
     def __init__(self, layout: list[int] = None) -> None:
         self.neighbors: list[BoardState] = []
         self.cost = 0
@@ -60,11 +58,3 @@ class BoardState:
             self.calcNeighbors()
 
         return self.neighbors
-
-    def checkSolved(self) -> bool:
-        return True if self.layout == BoardState.goal else False
-
-    def resetBoard(self) -> None:
-        self.layout = self.initialLayout
-        self.cost = 0
-        self.neighbors = []

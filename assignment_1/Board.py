@@ -1,5 +1,6 @@
 from BoardState import BoardState
 from AI import AI
+from copy import copy
 
 
 class Board:
@@ -9,6 +10,7 @@ class Board:
         else:
             self.state: BoardState = BoardState()
         self.ai: AI = AI(self.state)
+        self.initialState = copy(self.state)
 
     def solve(self) -> None:
         self.ai.solve()
@@ -40,7 +42,7 @@ class Board:
         Board.printPath(self.ai.euclideanPath)
 
     def reset(self) -> None:
-        self.state.resetBoard()
+        self.state = self.initialState
 
     def printPath(path: list[BoardState]) -> None:
         print(f"Number of steps taken {len(path) - 1}")
