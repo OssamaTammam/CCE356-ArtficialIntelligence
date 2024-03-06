@@ -5,24 +5,14 @@ from math import sqrt
 class BoardState:
     goal: list[int] = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-    def __init__(
-        self, layout: list[int] = None, boardState: "BoardState" = None
-    ) -> None:
+    def __init__(self, layout: list[int] = None) -> None:
         self.neighbors: list[BoardState] = []
         self.cost = 0
-
-        # check if it's already an object and clone it
-        if boardState is not None:
-            self.layout = boardState.layout.copy()
-            self.neighbors = boardState.neighbors.copy()
-            return
 
         # check if layout is present
         if layout is not None:
             self.layout = layout
-
-        # if layout is not specified generate a random layout
-        if layout is None and boardState is None:
+        else:
             self.layout = list(range(9))
             random.shuffle(self.layout)
 
