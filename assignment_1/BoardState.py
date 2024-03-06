@@ -74,9 +74,6 @@ class BoardState:
     def checkSolved(self) -> bool:
         return True if self.layout == BoardState.goal else False
 
-    def getZeroIndex(self) -> int:
-        return self.layout.index(0)
-
     def resetBoard(self) -> None:
         self.layout = self.initialLayout
         self.cost = 0
