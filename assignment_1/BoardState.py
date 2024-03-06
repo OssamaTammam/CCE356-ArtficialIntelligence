@@ -77,23 +77,6 @@ class BoardState:
     def getZeroIndex(self) -> int:
         return self.layout.index(0)
 
-    def manhattanDistance(self) -> None:
-        self.cost = 0
-
-        for i in range(len(self.layout)):
-            self.cost += abs((self.layout[i] // 3) - i // 3) + abs(
-                (self.layout[i] % 3) - i % 3
-            )
-
-    def euclideanDistance(self) -> None:
-        self.cost = 0
-
-        for i in range(len(self.layout)):
-            self.cost += sqrt(
-                ((self.layout[i] // 3) - i // 3) ** 2
-                + ((self.layout[i] % 3) - i % 3) ** 2
-            )
-
     def resetBoard(self) -> None:
         self.layout = self.initialLayout
         self.cost = 0

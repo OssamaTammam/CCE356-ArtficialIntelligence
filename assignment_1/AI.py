@@ -2,6 +2,7 @@ from collections import deque
 from BoardState import BoardState
 import heapq
 from time import time
+from math import sqrt
 
 
 class AI:
@@ -17,17 +18,21 @@ class AI:
         startTime = time()
         self.bfsPath = self.BFS()
         print(f"BFS Time: {time() - startTime}")
+
         startTime = time()
         self.dfsPath = self.DFS()
         print(f"DFS Time: {time() - startTime}")
+
         startTime = time()
         self.iddfsPath = self.IDDFS(30)
         print(f"Iterative Deepening DFS Time: {time() - startTime}")
+
         startTime = time()
-        self.manhattanPath = self.AStar(choice=True)
+        self.manhattanPath = self.AStar(heuristic=AI.manhattanDistance)
         print(f"A* using Manhattan Distance Time: {time() - startTime}")
+
         startTime = time()
-        self.euclideanPath = self.AStar()
+        self.euclideanPath = self.AStar(heuristic=AI.euclideanDistance)
         print(f"A* using Euclidean Distance Time: {time() - startTime}")
 
     def BFS(self) -> list[BoardState]:
@@ -93,20 +98,17 @@ class AI:
                     neighbor = (neighborState, currPath + [neighborState])
                     stack.append(neighbor)
 
-    # false -> euclidean , true -> manhattan
-    def AStar(self, choice: bool = False) -> list[BoardState]:
-        heap: list[tuple[BoardState, list[BoardState]]] = []
+    def AStar(self, heuristic: callable) -> list[BoardState]:
+        heap: list[tuple[int, BoardState, list[BoardState]]] = []
         visited: set[BoardState] = set()
 
-        if choice:
-            self.boardState.manhattanDistance()
-        else:
-            self.boardState.euclideanDistance()
-
-        heapq.heappush(heap, (self.boardState, [self.boardState]))
+        # tuple (cost,state,path)
+        heapq.heappush(
+            heap, (0 + heuristic(self.boardState), self.boardState, [self.boardState])
+        )
 
         while heap:
-            currState, currPath = heapq.heappop(heap)
+            currCost, currState, currPath = heapq.heappop(heap)
 
             if currState.checkSolved():
                 return currPath
@@ -114,13 +116,31 @@ class AI:
             visited.add(currState)
             for neighborState in currState.getNeighbors():
                 if neighborState not in visited:
-                    if choice:
-                        neighborState.manhattanDistance()
-                    else:
-                        neighborState.euclideanDistance()
-
+                    cost = currCost + 1 + heuristic(neighborState)
                     neighbor = (
+                        cost,
                         neighborState,
                         currPath + [neighborState],
                     )
                     heapq.heappush(heap, neighbor)
+
+    def manhattanDistance(boardState: BoardState) -> int:
+        manhattanDistance = 0
+
+        for i in range(len(boardState.layout)):
+            manhattanDistance += abs((boardState.layout[i] // 3) - i // 3) + abs(
+                (boardState.layout[i] % 3) - i % 3
+            )
+
+        return manhattanDistance
+
+    def euclideanDistance(boardState: BoardState) -> int:
+        euclideanDistance = 0
+
+        for i in range(len(boardState.layout)):
+            euclideanDistance += sqrt(
+                ((boardState.layout[i] // 3) - i // 3) ** 2
+                + ((boardState.layout[i] % 3) - i % 3) ** 2
+            )
+
+        return euclideanDistance
