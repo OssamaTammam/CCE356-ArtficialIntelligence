@@ -1,5 +1,4 @@
 import random
-from math import sqrt
 
 
 class BoardState:

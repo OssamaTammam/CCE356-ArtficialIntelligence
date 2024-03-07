@@ -12,8 +12,10 @@ class Board:
         self.ai: AI = AI(self.state)
         self.initialState = copy(self.state)
 
-    def solve(self) -> None:
-        self.ai.solve()
+    def solve(
+        self, bfs=True, dfs=True, iddfs=True, manhattan=True, euclidean=True
+    ) -> None:
+        self.ai.solve(bfs, dfs, iddfs, manhattan, euclidean)
 
     def printState(self) -> None:
         print("Current board state:")

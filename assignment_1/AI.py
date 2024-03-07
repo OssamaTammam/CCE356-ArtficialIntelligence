@@ -19,26 +19,31 @@ class AI:
     def checkSolved(boardState: BoardState) -> bool:
         return boardState.layout == AI.goal
 
-    def solve(self):
-        startTime = time()
-        self.bfsPath = self.BFS()
-        print(f"BFS Time: {time() - startTime}")
+    def solve(self, bfs=True, dfs=True, iddfs=True, manhattan=True, euclidean=True):
+        if bfs:
+            startTime = time()
+            self.bfsPath = self.BFS()
+            print(f"BFS Time: {time() - startTime}")
 
-        startTime = time()
-        self.dfsPath = self.DFS()
-        print(f"DFS Time: {time() - startTime}")
+        if dfs:
+            startTime = time()
+            self.dfsPath = self.DFS()
+            print(f"DFS Time: {time() - startTime}")
 
-        startTime = time()
-        self.iddfsPath = self.IDDFS(500)
-        print(f"Iterative Deepening DFS Time: {time() - startTime}")
+        if iddfs:
+            startTime = time()
+            self.iddfsPath = self.IDDFS(500)
+            print(f"Iterative Deepening DFS Time: {time() - startTime}")
 
-        startTime = time()
-        self.manhattanPath = self.AStar(heuristic=AI.manhattanDistance)
-        print(f"A* using Manhattan Distance Time: {time() - startTime}")
+        if manhattan:
+            startTime = time()
+            self.manhattanPath = self.AStar(heuristic=AI.manhattanDistance)
+            print(f"A* using Manhattan Distance Time: {time() - startTime}")
 
-        startTime = time()
-        self.euclideanPath = self.AStar(heuristic=AI.euclideanDistance)
-        print(f"A* using Euclidean Distance Time: {time() - startTime}")
+        if euclidean:
+            startTime = time()
+            self.euclideanPath = self.AStar(heuristic=AI.euclideanDistance)
+            print(f"A* using Euclidean Distance Time: {time() - startTime}")
 
     def BFS(self) -> list[BoardState]:
         queue: deque[tuple[BoardState, list[BoardState]]] = deque()
@@ -57,7 +62,6 @@ class AI:
                 if neighborState not in visited and neighborState not in queue:
                     neighbor = (neighborState, currPath + [neighborState])
                     queue.append(neighbor)
-        return []
 
     def DFS(self) -> list[BoardState]:
         stack: list[tuple[BoardState, list[BoardState]]] = []
