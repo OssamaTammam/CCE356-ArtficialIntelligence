@@ -48,11 +48,11 @@ class Board:
 
     def printPath(path: list[BoardState]) -> None:
         print(f"Number of steps taken {len(path) - 1}")
-        for state in path:
-            for i in range(3):
-                for j in range(3):
-                    if j == 2:
-                        print(state.layout[i * 3 + j])
-                    else:
-                        print(state.layout[i * 3 + j], end=",")
-            print("------")
+        # for state in path:
+        #     for i in range(3):
+        #         for j in range(3):
+        #             if j == 2:
+        #                 print(state.layout[i * 3 + j])
+        #             else:
+        #                 print(state.layout[i * 3 + j], end=",")
+        print("------")
